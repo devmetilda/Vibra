@@ -1,0 +1,17 @@
+# Ignore all node_modules
+node_modules
+client/node_modules
+server/node_modules
+
+# Ignore build artifacts
+client/build
+
+# Ignore env files
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
