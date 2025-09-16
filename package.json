@@ -1,0 +1,29 @@
+{
+  "name": "vibra-event-management",
+  "version": "1.0.0",
+  "description": "MERN Stack Event Management System for Campus Events",
+  "main": "server/server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && npm install",
+    "install-all": "npm run install-server && npm run install-client",
+    "start": "cd server && npm start"
+  },
+  "keywords": [
+    "mern",
+    "event-management",
+    "campus",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "devmetilda",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
