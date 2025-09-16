@@ -1,0 +1,214 @@
+/* Global Styles - Preserving Original Design */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  color: #333;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+.logo {
+  font-family: 'Island Moments', cursive;
+  font-size: 32px;
+  font-weight: normal;
+  color: #222;
+  padding-top: 15px;
+}
+
+.section-title {
+  font-size: 70px;
+  margin-bottom: 40px;
+  font-family: 'Inspiration', cursive;
+  color: #2a2a2a;
+}
+
+/* Color Variables */
+:root {
+  --primary-color: #D5C7A3;
+  --secondary-color: #C7BFB2;
+  --background-color: #F9F8F4;
+  --text-color: #333;
+  --white: #ffffff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: rgba(213, 199, 163, 0.9);
+  transform: translateY(-2px);
+}
+
+.btn-login {
+  background-color: #1b3a2f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Event Card Styles */
+.event-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+}
+
+.event-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.tag {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin: 10px;
+  z-index: 1;
+}
+
+.tag.academic {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.tag.cultural {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.tag.workshop {
+  background-color: #fde68a;
+  color: #78350f;
+}
+
+.tag.sports {
+  background-color: #bbf7d0;
+  color: #166534;
+}
+
+.tag.seminar {
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+/* Loading Spinner */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    font-size: 48px;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+}

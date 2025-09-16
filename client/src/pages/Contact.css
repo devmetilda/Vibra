@@ -1,0 +1,260 @@
+/* Contact Page Styles - Matching Original Design Exactly */
+
+.contact-page {
+  min-height: calc(100vh - 60px);
+  background-color: #F9F8F4;
+}
+
+/* Hero Section */
+.about-hero {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.about-hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-family: 'Italiana', serif;
+  font-weight: normal;
+  position: relative;
+  z-index: 1;
+}
+
+.about-hero p {
+  font-size: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Contact Section */
+.contact-section {
+  display: flex;
+  margin: 60px auto;
+  max-width: 1100px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-left {
+  flex: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 50px 40px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.contact-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+.contact-left > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-left h2 {
+  font-size: 25px;
+  margin-bottom: 25px;
+  font-family: 'Inria Serif', serif;
+}
+
+.contact-left p {
+  font-size: 15px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+}
+
+.info-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+}
+
+.info-line img {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.office-hours {
+  margin-top: 30px;
+}
+
+.office-hours h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-family: 'Inria Serif', serif;
+}
+
+.office-hours p {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Contact Form */
+.contact-right {
+  flex: 1;
+  padding: 50px 40px;
+  background: white;
+}
+
+.contact-right h2 {
+  font-size: 25px;
+  margin-bottom: 25px;
+  color: #333;
+  font-family: 'Inria Serif', serif;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #555;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #D5C7A3;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-btn {
+  background-color: #D5C7A3;
+  color: #333;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.submit-btn:hover {
+  background-color: rgba(213, 199, 163, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 80px 20px;
+  }
+  
+  .about-hero h1 {
+    font-size: 36px;
+  }
+  
+  .about-hero p {
+    font-size: 18px;
+  }
+  
+  .contact-section {
+    flex-direction: column;
+    margin: 40px 20px;
+  }
+  
+  .contact-left,
+  .contact-right {
+    padding: 30px 25px;
+  }
+  
+  .info-line {
+    font-size: 14px;
+  }
+  
+  .info-line img {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    padding: 60px 15px;
+  }
+  
+  .about-hero h1 {
+    font-size: 28px;
+  }
+  
+  .about-hero p {
+    font-size: 16px;
+  }
+  
+  .contact-section {
+    margin: 30px 15px;
+  }
+  
+  .contact-left,
+  .contact-right {
+    padding: 25px 20px;
+  }
+  
+  .contact-left h2,
+  .contact-right h2 {
+    font-size: 22px;
+  }
+}
