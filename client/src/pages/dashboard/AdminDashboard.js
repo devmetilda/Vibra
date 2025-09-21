@@ -898,24 +898,24 @@ const StudentRegistrations = ({ users, loading, onDataChange }) => {
                       </td>
                       <td className="registration-actions">
                         {status === 'Pending' && (
-                          <button
-                            className="select-btn"
-                            onClick={() => handleSelect(user._id, event?._id, user.fullName)}
-                          >
-                            Select
-                          </button>
-                        )}
-                        <button className="edit-btn" onClick={() => handleEdit(user)}>
-                          Edit
-                        </button>
-                        <button className="remove-btn" onClick={() => handleRemove(user._id, user.fullName)}>
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ).flat() : (
+                              <button
+                                className="select-btn"
+                                onClick={() => handleSelect(user._id, event?._id, user.fullName)}
+                              >
+                                Select
+                              </button>
+                            )}
+                            <button className="remove-btn" onClick={() => handleRemove(user._id, user.fullName)}>
+                              Remove
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )
+                  .flat()
+                  .filter(Boolean) // Remove null entries from filtering
+              ) : (
                 <tr>
                   <td colSpan="7" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
                     No students have registered for events yet.
@@ -924,6 +924,7 @@ const StudentRegistrations = ({ users, loading, onDataChange }) => {
               )}
             </tbody>
           </table>
+
 
           <div className="export-buttons">
             <button className="export-btn" onClick={exportToExcel}>Export to Excel</button>
