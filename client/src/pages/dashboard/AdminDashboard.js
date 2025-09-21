@@ -286,7 +286,106 @@ const EditEventModal = ({ event, onClose, onSave }) => {
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit}>
-          {/* Form fields... */}
+           <div>
+            <label>Event Title *</label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter event title"
+              required
+            />
+          </div>
+          <div>
+            <label>Event Description *</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Enter event description"
+              rows="3"
+              required
+            />
+          </div>
+          <div className="form-row">
+            <div>
+              <label>Event Date *</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Event Time *</label>
+              <input
+                type="text"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                placeholder="e.g., 10:00 AM – 2:00 PM"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label>Event Location *</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              placeholder="Enter event location"
+              required
+            />
+          </div>
+          <div>
+            <label>Event Category *</label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a category</option>
+              <option value="academic">Academic</option>
+              <option value="cultural">Cultural</option>
+              <option value="sports">Sports</option>
+              <option value="workshop">Workshops</option>
+              <option value="seminar">Seminars</option>
+            </select>
+          </div>
+          <div>
+            <label>Event Image URL</label>
+            <input
+              type="url"
+              name="imageUrl"
+              value={formData.imageUrl}
+              onChange={handleChange}
+              placeholder="Enter image URL"
+            />
+          </div>
+
+          <div className="checkbox-row">
+            <input
+              type="checkbox"
+              id="edit-selection-required"
+              name="selectionRequired"
+              checked={formData.selectionRequired}
+              onChange={handleChange}
+            />
+            <label htmlFor="edit-selection-required">Selection required from registered students</label>
+          </div>
+
+          <div className="form-actions">
+            <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? 'Updating...' : 'Update Event'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -442,8 +541,114 @@ const CreateEvent = ({ onEventCreated }) => {
   
   return (
       <div className="create-event">
-          {/* Form JSX... */}
+       <div className="recent-events">
+        <div className="recent-events-header">
+          <h3>Create New Event</h3>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Event Title *</label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter event title"
+              required
+            />
+          </div>
+          <div>
+            <label>Event Description *</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Enter event description"
+              rows="3"
+              required
+            />
+          </div>
+          <div className="form-row">
+            <div>
+              <label>Event Date *</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Event Time *</label>
+              <input
+                type="text"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                placeholder="e.g., 10:00 AM – 2:00 PM"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label>Event Location *</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              placeholder="Enter event location"
+              required
+            />
+          </div>
+          <div>
+            <label>Event Category *</label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a category</option>
+              <option value="academic">Academic</option>
+              <option value="cultural">Cultural</option>
+              <option value="sports">Sports</option>
+              <option value="workshop">Workshops</option>
+              <option value="seminar">Seminars</option>
+            </select>
+          </div>
+          <div>
+            <label>Event Image URL</label>
+            <input
+              type="url"
+              name="imageUrl"
+              value={formData.imageUrl}
+              onChange={handleChange}
+              placeholder="Enter image URL"
+            />
+          </div>
+
+          <div className="checkbox-row">
+            <input
+              type="checkbox"
+              id="selection-required"
+              name="selectionRequired"
+              checked={formData.selectionRequired}
+              onChange={handleChange}
+            />
+            <label htmlFor="selection-required">Selection required from registered students</label>
+          </div>
+
+          <div className="form-actions">
+            <button type="reset" className="cancel-btn">Cancel</button>
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? 'Creating...' : 'Create Event'}
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
   );
 };
 
@@ -485,8 +690,158 @@ const StudentRegistrations = ({ users, loading, onDataChange }) => {
             toast.error('Failed to select student');
         }
     };
+  const getStatusBadge = (user, registration) => {
+    if (!user.registeredEvents || user.registeredEvents.length === 0) return 'No Events';
 
-    // ... getStatusBadge, getStatusClass, exportToExcel, exportToPDF functions can remain here ...
+    // Check if this specific registration is selected
+    if (registration.selected) return 'Selected';
+
+    // Check if the event requires selection
+    const event = events.find(event => event._id === registration.event?._id);
+    if (event?.selectionRequired) return 'Pending';
+
+    return 'Registered';
+  };
+
+  const getStatusClass = (status) => {
+    switch(status) {
+      case 'Selected': return 'status-selected';
+      case 'Registered': return 'status-approved';
+      case 'Rejected': return 'status-rejected';
+      case 'Pending': return 'status-pending';
+      default: return 'status-none';
+    }
+  };
+
+  const exportToExcel = () => {
+    try {
+      // Prepare data for export
+      const exportData = [];
+      users.forEach(user => {
+        if (user.registeredEvents && user.registeredEvents.length > 0) {
+          user.registeredEvents.forEach(registration => {
+            const event = registration.event;
+            exportData.push({
+              'Name': user.fullName,
+              'Email': user.email,
+              'Event': event?.title || 'Event Deleted',
+              'Department': user.department || 'Computer Science',
+              'Registered On': new Date(registration.registeredAt || user.createdAt).toLocaleDateString(),
+              'Status': getStatusBadge(user)
+            });
+          });
+        }
+      });
+
+      if (exportData.length === 0) {
+        toast.warning('No registration data to export');
+        return;
+      }
+
+      // Create workbook and worksheet
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(exportData);
+
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'Student Registrations');
+
+      // Save file
+      XLSX.writeFile(wb, `Student_Registrations_${new Date().toISOString().split('T')[0]}.xlsx`);
+      toast.success('Excel file exported successfully!');
+    } catch (error) {
+      console.error('Export to Excel error:', error);
+      toast.error('Failed to export to Excel');
+    }
+  };
+
+  const exportToPDF = async () => {
+    try {
+      // Import jsPDF
+      const jsPDF = (await import('jspdf')).default;
+
+      // Prepare data for export
+      const exportData = [];
+      users.forEach(user => {
+        if (user.registeredEvents && user.registeredEvents.length > 0) {
+          user.registeredEvents.forEach(registration => {
+            const event = registration.event;
+            exportData.push({
+              name: user.fullName || 'N/A',
+              email: user.email || 'N/A',
+              event: event?.title || 'Event Deleted',
+              department: user.department || 'Computer Science',
+              registeredOn: new Date(registration.registeredAt || user.createdAt).toLocaleDateString(),
+              status: getStatusBadge(user, registration)
+            });
+          });
+        }
+      });
+
+      if (exportData.length === 0) {
+        toast.warning('No user data to export');
+        return;
+      }
+
+      // Create PDF
+      const doc = new jsPDF();
+
+      // Add title
+      doc.setFontSize(20);
+      doc.setTextColor(139, 106, 58);
+      doc.text('Student Registrations Report', 20, 20);
+
+      // Add metadata
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 35);
+      doc.text(`Total Records: ${exportData.length}`, 20, 45);
+
+      // Add table headers
+      doc.setFontSize(10);
+      doc.setTextColor(255, 255, 255);
+      doc.setFillColor(139, 106, 58);
+      doc.rect(20, 60, 170, 10, 'F');
+      doc.text('Name', 25, 67);
+      doc.text('Email', 65, 67);
+      doc.text('Event', 105, 67);
+      doc.text('Department', 135, 67);
+      doc.text('Status', 165, 67);
+
+      // Add table data
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(9);
+      let yPosition = 75;
+
+      exportData.forEach((row, index) => {
+        if (yPosition > 270) { // Start new page if needed
+          doc.addPage();
+          yPosition = 20;
+        }
+
+        // Alternate row colors
+        if (index % 2 === 0) {
+          doc.setFillColor(250, 246, 243);
+          doc.rect(20, yPosition - 5, 170, 8, 'F');
+        }
+
+        doc.text(row.name.substring(0, 15), 25, yPosition);
+        doc.text(row.email.substring(0, 20), 65, yPosition);
+        doc.text(row.event.substring(0, 15), 105, yPosition);
+        doc.text(row.department.substring(0, 12), 135, yPosition);
+        doc.text(row.status, 165, yPosition);
+
+        yPosition += 8;
+      });
+
+      // Save file
+      const fileName = `Student_Registrations_${new Date().toISOString().split('T')[0]}.pdf`;
+      doc.save(fileName);
+      toast.success(`PDF exported successfully!`);
+    } catch (error) {
+      console.error('Export to PDF error:', error);
+      toast.error('Failed to export to PDF. Please try again.');
+    }
+  };
 
     return (
         <div className="student-registrations">
@@ -535,22 +890,101 @@ const EditUserModal = ({ user, onClose, onSave }) => {
     
     return (
         <div className="modal-overlay">
-            {/* Modal and Form JSX... */}
+            <div className="modal-content">
+        <div className="modal-header">
+          <h3>Edit User - {user.fullName}</h3>
+          <button className="close-btn" onClick={onClose}>×</button>
         </div>
+
+        <form onSubmit={handleSubmit} className="edit-user-form">
+          <div className="form-field">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-field">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-field">
+            <label>Department</label>
+            <input
+              type="text"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label>Phone Number</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="modal-actions">
+            <button type="button" className="cancel-btn" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="save-btn" disabled={loading}>
+              {loading ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
     );
 };
 
 const AdminSettings = ({ user }) => {
   const { updateUser } = useAuth();
   const [formData, setFormData] = useState({
-    fullName: user?.fullName || '',
-    email: user?.email || '',
-    // ... other fields
+   fullName: user?.fullName || 'Admin User',
+    email: user?.email || 'admin@college.edu',
+    role: 'Event Coordinator',
+    department: 'Student Affairs',
+    phoneNumber: user?.phoneNumber || '(555) 987-6543',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState(user?.profileImage || '/assets/Profile.png');
 
-  // ... handleChange and handleImageChange functions can remain here ...
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target.result);
+        toast.success('Profile image updated! Click Save Changes to apply.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -569,7 +1003,114 @@ const AdminSettings = ({ user }) => {
 
     return (
         <div className="admin-settings-page">
-            {/* Form JSX... */}
+            <h2>Admin Settings</h2>
+
+      <div className="admin-profile-section">
+        <img src={profileImage} alt="Admin" className="admin-profile-image" />
+        <div className="admin-info">
+          <h3>{user?.fullName || 'Admin User'}</h3>
+          <p>Event Coordinator</p>
+          <label className="change-picture-btn">
+            Change Profile Picture
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
+            />
+          </label>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="admin-settings-form">
+        <div className="settings-form-grid">
+          <div className="form-field">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              placeholder="Admin User"
+            />
+          </div>
+          <div className="form-field">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="admin@college.edu"
+            />
+          </div>
+          <div className="form-field">
+            <label>Role</label>
+            <input
+              type="text"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              placeholder="Event Coordinator"
+            />
+          </div>
+          <div className="form-field">
+            <label>Department</label>
+            <input
+              type="text"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              placeholder="Student Affairs"
+            />
+          </div>
+        </div>
+
+        <div className="form-field phone-field">
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            placeholder="(555) 987-6543"
+          />
+        </div>
+
+        <div className="password-section">
+          <h4>Change Password</h4>
+          <div className="password-grid">
+            <input
+              type="password"
+              name="currentPassword"
+              value={formData.currentPassword}
+              onChange={handleChange}
+              placeholder="Current Password"
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm New Password"
+            />
+            <input
+              type="password"
+              name="newPassword"
+              value={formData.newPassword}
+              onChange={handleChange}
+              placeholder="New Password"
+            />
+          </div>
+        </div>
+
+        <div className="settings-form-actions">
+          <button type="button" className="cancel-settings-btn">Cancel</button>
+          <button type="submit" className="save-settings-btn" disabled={loading}>
+            {loading ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
+      </form>
         </div>
     );
 };
