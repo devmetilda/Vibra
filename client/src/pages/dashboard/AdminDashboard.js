@@ -913,9 +913,7 @@ const StudentRegistrations = ({ users, loading, onDataChange }) => {
                       );
                     })
                   )
-                  .flat()
-                  .filter(Boolean) // Remove null entries from filtering
-              ) : (
+                  .flat() : (
                 <tr>
                   <td colSpan="7" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
                     No students have registered for events yet.
