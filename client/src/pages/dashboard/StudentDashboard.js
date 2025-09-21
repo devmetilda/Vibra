@@ -325,9 +325,7 @@ const MyRegisteredEvents = ({ events, loading, onDataChange }) => {
                                     <button className="details-button" onClick={() => handleViewDetails(event._id)}>
                                         View Event Details
                                     </button>
-                                    <button className="unregister-button" onClick={() => handleUnregister(event._id, event.title)}>
-                                        Unregister
-                                    </button>
+                                   
                                 </div>
                             </div>
                         );
