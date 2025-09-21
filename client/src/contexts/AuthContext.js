@@ -12,6 +12,10 @@ export const useAuth = () => {
   return context;
 };
 
+// --- FIX #1: Define the base URL for your backend API ---
+// This uses the environment variable you set in Render.
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,7 +34,8 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('/api/auth/me');
+          // --- FIX #2: Use the full URL for the auth check ---
+          const response = await axios.get(`${API_BASE_URL}/api/auth/me`);
           setUser(response.data.user);
         } catch (error) {
           console.error('Auth check failed:', error);
@@ -46,7 +51,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', {
+      // --- FIX #3: Use the full URL for login ---
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
         email,
         password
       });
@@ -71,7 +77,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('/api/auth/register', userData);
+      // --- FIX #4: Use the full URL for registration ---
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, userData);
       
       const { token, user } = response.data;
       
@@ -128,7 +135,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
