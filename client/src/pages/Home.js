@@ -10,19 +10,28 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchUpcomingEvents();
-  }, []);
+    const fetchUpcomingEvents = async () => {
+      try {
+        // CHANGE 1: Use the full API URL from environment variables for deployment.
+        // The '/api/...' path works in local development but not on Render.
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/events?limit=4`;
+        const response = await axios.get(apiUrl);
 
-  const fetchUpcomingEvents = async () => {
-    try {
-      const response = await axios.get('/api/events?limit=4');
-      setEvents(response.data.events);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+        // CHANGE 2: Safely set the events state.
+        // This checks if 'response.data.events' exists and is an array.
+        // If not, it sets the state to an empty array [] to prevent crashing.
+        setEvents(response.data?.events || []);
+
+      } catch (error) {
+        console.error('Error fetching events:', error);
+        // On error, the 'events' state will remain a safe empty array.
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUpcomingEvents();
+  }, []); // Empty dependency array ensures this runs only once when the component mounts.
 
   return (
     <div className="home">
@@ -127,7 +136,7 @@ const Home = () => {
       <section className="features-section">
         <h2 className="section-title">Why Use Campus Events?</h2>
         <div className="features-grid">
-          
+
           <div className="feature-card">
             <img src="/assets/event-icon.png" alt="Event Icon" className="feature-icon" />
             <h3>Never Miss an Event</h3>
