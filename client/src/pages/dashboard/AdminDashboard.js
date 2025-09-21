@@ -845,19 +845,106 @@ const StudentRegistrations = ({ users, loading, onDataChange }) => {
 
     return (
         <div className="student-registrations">
-            {/* Table and filter JSX... */}
-            {editingUser && (
-                <EditUserModal
-                    user={editingUser}
-                    onClose={() => setEditingUser(null)}
-                    onSave={() => {
-                        setEditingUser(null);
-                        onDataChange();
-                    }}
-                />
-            )}
+           <div className="registrations-header-new">
+        <h3>Student Registrations</h3>
+        <div className="filter-section-new">
+          <label>Filter Event:</label>
+          <select
+            value={filterEvent}
+            onChange={(e) => setFilterEvent(e.target.value)}
+            className="filter-dropdown-new"
+          >
+            <option value="All Events">All Events</option>
+            {events.map(event => (
+              <option key={event._id} value={event.title}>{event.title}</option>
+            ))}
+          </select>
         </div>
-    );
+      </div>
+
+      {loading ? (
+        <div className="loading">Loading registrations...</div>
+      ) : (
+        <div className="registrations-table-container">
+          <table className="registrations-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Event</th>
+                <th>Department</th>
+                <th>Registered On</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.length > 0 ? users.map(user =>
+                user.registeredEvents?.map((registration, index) => {
+                  const event = registration.event;
+                  const status = getStatusBadge(user, registration);
+
+                  return (
+                    <tr key={`${user._id}-${index}`}>
+                      <td>{user.fullName}</td>
+                      <td>{user.email}</td>
+                      <td>{event?.title || 'Event Deleted'}</td>
+                      <td>{user.department || 'Computer Science'}</td>
+                      <td>{new Date(registration.registeredAt || user.createdAt).toLocaleDateString()}</td>
+                      <td>
+                        <span className={`status-badge ${getStatusClass(status)}`}>
+                          {status}
+                        </span>
+                      </td>
+                      <td className="registration-actions">
+                        {status === 'Pending' && (
+                          <button
+                            className="select-btn"
+                            onClick={() => handleSelect(user._id, event?._id, user.fullName)}
+                          >
+                            Select
+                          </button>
+                        )}
+                        <button className="edit-btn" onClick={() => handleEdit(user)}>
+                          Edit
+                        </button>
+                        <button className="remove-btn" onClick={() => handleRemove(user._id, user.fullName)}>
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ).flat() : (
+                <tr>
+                  <td colSpan="7" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    No students have registered for events yet.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+
+          <div className="export-buttons">
+            <button className="export-btn" onClick={exportToExcel}>Export to Excel</button>
+            <button className="export-btn" onClick={exportToPDF}>Export to PDF</button>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {editingUser && (
+        <EditUserModal
+          user={editingUser}
+          onClose={() => setEditingUser(null)}
+          onSave={() => {
+            setEditingUser(null);
+            window.location.reload();
+          }}
+        />
+      )}
+    </div>
+  );
 };
 
 const EditUserModal = ({ user, onClose, onSave }) => {
